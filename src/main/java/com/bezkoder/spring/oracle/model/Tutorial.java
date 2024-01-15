@@ -2,60 +2,53 @@ package com.bezkoder.spring.oracle.model;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "tutorials")
+@Table(name = "tutorials", schema = "SHOPLI")
 public class Tutorial {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+	private String id;
+
+	public Tutorial() {
+		super();
+	}
 
 	@Column(name = "title")
 	private String title;
 	@Column(name = "code")
 	private String code;
-	
+
 	@Column(name = "description")
 	private String description;
 
 	@Column(name = "published")
 	private boolean published;
 
-	private long category_id;
-	
-	public long getCategory_id() {
-		return category_id;
-	}
+	@Column(name = "parent_id")
+	private String parent_id;
 
-	public void setCategory_id(long category_id) {
+	public Tutorial(String id, String title, String code, String description, boolean published, String parent_id,
+			long category_id) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.code = code;
+		this.description = description;
+		this.published = published;
+		this.parent_id = parent_id;
 		this.category_id = category_id;
 	}
 
-	public Tutorial() {
-
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	
-	public Tutorial(String title, String description, boolean published,String code,long category_id) {
-		this.title = title;
-		this.description = description;
-		this.published = published;
-		this.code =code;
-		this.category_id=category_id;
-	}
-
-	public long getId() {
+	public String getId() {
 		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -64,6 +57,14 @@ public class Tutorial {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {
@@ -78,18 +79,27 @@ public class Tutorial {
 		return published;
 	}
 
-	public void setPublished(boolean isPublished) {
-		this.published = isPublished;
-	}
-	
-	public boolean getPublished() {
-		return published;
+	public void setPublished(boolean published) {
+		this.published = published;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+	public String getParent_id() {
+		return parent_id;
 	}
+
+	public void setParent_id(String parent_id) {
+		this.parent_id = parent_id;
+	}
+
+	public long getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(long category_id) {
+		this.category_id = category_id;
+	}
+
+	@Column(name = "category_id")
+	private long category_id;
 
 }

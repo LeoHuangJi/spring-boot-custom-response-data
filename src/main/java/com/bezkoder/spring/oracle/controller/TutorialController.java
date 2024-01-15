@@ -39,6 +39,12 @@ public class TutorialController {
 		ResponseData res = tutorialService.getAll();
 		return new ResponseEntity<>(res, res.getHttpStatus());
 	}
+	
+	@GetMapping("/tutorials2")
+	public ResponseEntity<ResponseData> getAllTutorials2(@RequestParam(required = false) String title) throws Exception {
+		ResponseData res = tutorialService.getAll2(title);
+		return new ResponseEntity<>(res, res.getHttpStatus());
+	}
 
 	@GetMapping("/tutorials/{id}")
 	public ResponseEntity<Object> findById(@PathVariable("id") long id) {
@@ -52,6 +58,13 @@ public class TutorialController {
 		ResponseData res = tutorialService.save(0,tutorial);
 		return new ResponseEntity<>(res, res.getHttpStatus());
 	}
+	
+	@PostMapping("/tutorials2")
+	public ResponseEntity<ResponseData> createTutorial2(@RequestBody List<Tutorial> body) throws Exception {
+		ResponseData res = tutorialService.saveV2(body);
+		return new ResponseEntity<>(res, res.getHttpStatus());
+	}
+
 
 	@PutMapping("/tutorials/{id}")
 	public ResponseEntity<ResponseData> updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) throws Exception {
